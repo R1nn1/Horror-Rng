@@ -1,0 +1,122 @@
+local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
+
+local window = DrRayLibrary:Load("Rinns Hub", "Default")
+
+local tab = DrRayLibrary.newTab("Main Tab", "ImageIdHere")
+
+local autoRollEnabled = false
+local giveLuckFastEnabled = false
+local giveLuckSlowEnabled = false
+
+-- Auto Roll Toggle
+tab.newToggle("Auto Roll", "Rolls For you", false, function(toggleState)
+    autoRollEnabled = toggleState
+    if autoRollEnabled then
+        print("Auto Roll turned on")
+        spawn(function()
+            while autoRollEnabled do
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("StartRoll"):FireServer()
+                wait(0.4)
+            end
+        end)
+    else
+        print("Auto Roll turned off")
+    end
+end)
+
+-- Give Luck Fast Toggle
+tab.newToggle("Give Luck fast", "Gives you luck fast", false, function(toggleState)
+    giveLuckFastEnabled = toggleState
+    if giveLuckFastEnabled then
+        print("Give Luck fast turned on")
+        spawn(function()
+            while giveLuckFastEnabled do
+                for i = 1, 30 do  -- Loop to fire the event multiple times
+                    game:GetService("ReplicatedStorage").Events.InventoryEvent:FireServer("Equip", "Super Luck Potion", "Usable")
+                end
+                wait(0.0001)  -- Minimal delay to avoid crashing the game
+            end
+        end)
+    else
+        print("Give Luck fast turned off")
+    end
+end)
+
+-- Give Luck Slow Toggle
+tab.newToggle("Give Luck slow", "Gives you luck slow in case your device can't handle give luck fast", false, function(toggleState)
+    giveLuckSlowEnabled = toggleState
+    if giveLuckSlowEnabled then
+        print("Give Luck slow turned on")
+        spawn(function()
+            while giveLuckSlowEnabled do
+                for i = 1, 3 do  -- Loop to fire the event multiple times
+                    game:GetService("ReplicatedStorage").Events.InventoryEvent:FireServer("Equip", "Super Luck Potion", "Usable")
+                end
+                wait(0.00001)  -- Slow delay
+            end
+        end)
+    else
+        print("Give Luck slow turned off")
+    end
+end)
+
+local tab = DrRayLibrary.newTab("Misc Tab", "ImageIdHere")
+
+-- Auto Upgrade Luck Toggle
+tab.newToggle("Auto Upgrade Luck", "Buys the Luck upgrade for you", true, function(toggleState)
+    local autoUpgradeLuckEnabled = toggleState
+    if autoUpgradeLuckEnabled then
+        print("Auto Upgrade Luck turned on")
+        spawn(function()
+            while autoUpgradeLuckEnabled do
+                local args = {
+                    [1] = "Luck"
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Upgrade"):FireServer(unpack(args))
+                wait(0.5)  -- Adjust the wait time as needed
+            end
+        end)
+    else
+        print("Auto Upgrade Luck turned off")
+    end
+end)
+
+-- Auto Upgrade Money Toggle
+tab.newToggle("Auto Upgrade Money", "Buys the Money Upgrade for you", true, function(toggleState)
+    local autoUpgradeMoneyEnabled = toggleState
+    if autoUpgradeMoneyEnabled then
+        print("Auto Upgrade Money turned on")
+        spawn(function()
+            while autoUpgradeMoneyEnabled do
+                local args = {
+                    [1] = "Money"
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Upgrade"):FireServer(unpack(args))
+                wait(0.5)  -- Adjust the wait time as needed
+            end
+        end)
+    else
+        print("Auto Upgrade Money turned off")
+    end
+end)
+
+-- Auto Upgrade Cooldown Toggle
+tab.newToggle("Auto Upgrade Cooldown", "Buys the Cooldown Upgrade for you ", true, function(toggleState)
+    local autoUpgradeCooldownEnabled = toggleState
+    if autoUpgradeCooldownEnabled then
+        print("Auto Upgrade Cooldown turned on")
+        spawn(function()
+            while autoUpgradeCooldownEnabled do
+                local args = {
+                    [1] = "Cooldown"
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Upgrade"):FireServer(unpack(args))
+                wait(0.5)  -- Adjust the wait time as needed
+            end
+        end)
+    else
+        print("Auto Upgrade Cooldown turned off")
+    end
+end)
+
+print("Script loaded successfully")
